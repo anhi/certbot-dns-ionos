@@ -9,6 +9,15 @@ from certbot.plugins import dns_common
 
 logger = logging.getLogger(__name__)
 
+import socket
+import requests.packages.urllib3.util.connection as urllib3_cn
+
+def allowed_gai_family():
+    family = socket.AF_INET    # force IPv4
+    return family
+
+urllib3_cn.allowed_gai_family = allowed_gai_family
+
 
 class Authenticator(dns_common.DNSAuthenticator):
     """DNS Authenticator for IONOS
